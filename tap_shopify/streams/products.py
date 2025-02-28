@@ -20,8 +20,9 @@ class Products(ShopifyGqlStream):
         """
         filter_key = "updated_at"
         params = {
-            "query": f"{filter_key}:>='{updated_at_min}' AND {filter_key}:<'{updated_at_max}'",
+            "query": f"{filter_key}:>='{updated_at_min}'",
             "first": self.results_per_page,
+            "sortKey": "UPDATED_AT",
         }
         if cursor:
             params["after"] = cursor

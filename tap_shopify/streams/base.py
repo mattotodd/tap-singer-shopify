@@ -222,7 +222,7 @@ class Stream():
         return {
             "since_id": since_id,
             "updated_at_min": updated_at_min,
-            "updated_at_max": updated_at_max,
+            # "updated_at_max": updated_at_max,
             "limit": self.results_per_page,
             status_key: "any"
         }

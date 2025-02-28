@@ -66,7 +66,6 @@ class ShopifyGqlStream(Stream):
 
         Args:
             updated_at_min (str): Minimum updated_at timestamp.
-            updated_at_max (str): Maximum updated_at timestamp.
             cursor (str): Pagination cursor, if any.
 
         Returns:
@@ -74,8 +73,9 @@ class ShopifyGqlStream(Stream):
         """
         rkey = self.replication_key
         params = {
-            "query": f"{rkey}:>='{updated_at_min}' AND {rkey}:<'{updated_at_max}'",
+            "query": f"{rkey}:>='{updated_at_min}'",
             "first": self.results_per_page,
+            "sortKey": "UPDATED_AT",
         }
         if cursor:
             params["after"] = cursor
@@ -137,6 +137,7 @@ class ShopifyGqlStream(Stream):
                     yield obj
 
                 page_info =  data.get("pageInfo")
+                print("***", page_info)
                 cursor , has_next_page = page_info.get("endCursor"), page_info.get("hasNextPage")
 
             last_updated_at = query_end
